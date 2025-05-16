@@ -1,9 +1,10 @@
 from threading import Thread
 import tkinter as tk
-from tkinter import messagebox, ttk
+from tkinter import messagebox, ttk, filedialog
 from recorder import Recorder
 from stt import STT
 from idioms import IDIOMS
+from path_utils import remove_path
 
 
 class MainScreen(tk.Tk):
@@ -32,6 +33,16 @@ class MainScreen(tk.Tk):
             source_language_menu = ttk.OptionMenu(source_language_frame, self.source_language_idioms, *self.idioms_options)
             source_language_menu.pack(side=tk.LEFT, padx=5)
             self._deactivate_widget(self.stop_record_button)
+
+            image_frame = ttk.Frame(self)
+            image_frame.pack(anchor='w', pady=5, padx=10)
+            image_label = ttk.Label(image_frame, text='Select Audio:')
+            image_label.pack(side=tk.LEFT, padx=5)
+
+            self.audio_entry = tk.Entry(image_frame)
+            self.audio_entry.pack(side=tk.LEFT, padx=5)
+            image_button = ttk.Button(image_frame, text='Select', command=self.select_audio)
+            image_button.pack(side=tk.LEFT, padx=5)
 
             play_audio_frame = ttk.Frame(self)
             play_audio_frame.pack(fill=tk.X, padx=10, pady=10)
@@ -69,6 +80,16 @@ class MainScreen(tk.Tk):
         self._activate_widget(self.play_audio_button)
         self._activate_widget(self.transcribe_button)
         self.status_label.config(text='')
+
+    def select_audio(self):
+        audio_path = filedialog.askopenfilename()
+        if(audio_path):
+            self.recorder.audio_path = audio_path
+            audio_name = remove_path(audio_path)
+            self.audio_entry.delete(0, tk.END)
+            self.audio_entry.insert(0, audio_name)
+            self._activate_widget(self.play_audio_button)
+            self._activate_widget(self.transcribe_button)
 
     def play_audio(self):
         if(self.recorder.is_audio_exists):
