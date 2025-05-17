@@ -13,7 +13,7 @@ class MainScreen(tk.Tk):
         super().__init__()
         try:
             self.title('Speech To Text')
-            self.geometry('400x250')
+            self.geometry('400x300')
             self.recorder = Recorder()
             self.stt = STT()
             self.idioms_options = list(IDIOMS.keys())
