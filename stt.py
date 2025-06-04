@@ -1,4 +1,4 @@
-from whisper import load_audio, load_model, pad_or_trim,transcribe
+from whisper import load_audio, load_model, pad_or_trim
 
 
 class STT:
