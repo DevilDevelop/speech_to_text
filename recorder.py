@@ -4,10 +4,11 @@ from soundfile import SoundFile
 from playaudio import playaudio
 from path_utils import join_dirname, check_file_exists
 
+AUDIO_RECORDED_PATH = join_dirname('audio.wav')
 
 class Recorder:
     def __init__(self):
-        self.audio_path = join_dirname('audio.wav')
+        self.audio_path = AUDIO_RECORDED_PATH
         self.is_recording = False
         self.sample_rate = 192000
         self.channels = 1
@@ -32,4 +33,5 @@ class Recorder:
 
     def stop_record(self):
         self.is_recording = False
+        self.audio_path = AUDIO_RECORDED_PATH
     
