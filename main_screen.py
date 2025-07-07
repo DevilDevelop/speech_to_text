@@ -101,15 +101,11 @@ class MainScreen(tk.Tk):
         source_language = self.source_language_idioms.get()
         source_language = IDIOMS[source_language]
         if(source_language):
-            self.status_label.config(text='Transcribing...')
-            thread = Thread(target=self.stt.transcribe_text, args=[self.recorder.audio_path, source_language], daemon=True)
-            thread.start()
             result = self.stt.transcribe_text(self.recorder.audio_path, source_language)
             self._activate_widget(self.text_entry)
             self.text_entry.delete('1.0', tk.END)
             self.text_entry.insert('1.0', result)
             self._deactivate_widget(self.text_entry)
-            self.status_label.config(text='')
 
         else:
             messagebox.showerror('Error', 'Select source language.')
