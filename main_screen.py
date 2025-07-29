@@ -70,6 +70,9 @@ class MainScreen(tk.Tk):
             messagebox.showerror('Error', e)
 
     def start_record(self):
+        self._deactivate_widget(self.transcribe_button)
+        self._deactivate_widget(self.select_audio_button)
+        self._deactivate_widget(self.play_audio_button)
         Thread(target=self.recorder.record_audio, daemon=True).start()
         self._deactivate_widget(self.start_record_button)
         self._activate_widget(self.stop_record_button)
@@ -81,7 +84,9 @@ class MainScreen(tk.Tk):
         self._activate_widget(self.start_record_button)
         self._activate_widget(self.play_audio_button)
         self._activate_widget(self.transcribe_button)
+        self._activate_widget(self.audio_entry)
         self.audio_entry.delete(0, tk.END)
+        self._deactivate_widget(self.audio_entry)
         self.status_label.config(text='')
 
     def select_audio(self):
