@@ -31,8 +31,8 @@ class MainScreen(tk.Tk):
                 source_language_label = ttk.Label(source_language_frame, text='Source Language:')
                 source_language_label.pack(side=tk.LEFT)
                 self.source_language_idioms = tk.StringVar(self)
-                source_language_menu = ttk.OptionMenu(source_language_frame, self.source_language_idioms, *self.idioms_options)
-                source_language_menu.pack(side=tk.LEFT, padx=5)
+                self.source_language_menu = ttk.OptionMenu(source_language_frame, self.source_language_idioms, *self.idioms_options)
+                self.source_language_menu.pack(side=tk.LEFT, padx=5)
                 self._deactivate_widget(self.stop_record_button)
 
                 image_frame = ttk.Frame(self)
@@ -42,14 +42,15 @@ class MainScreen(tk.Tk):
 
                 self.audio_entry = tk.Entry(image_frame)
                 self.audio_entry.pack(side=tk.LEFT, padx=5)
-                image_button = ttk.Button(image_frame, text='Select', command=self.select_audio)
-                image_button.pack(side=tk.LEFT, padx=5)
+                self.select_audio_button = ttk.Button(image_frame, text='Select', command=self.select_audio)
+                self.select_audio_button.pack(side=tk.LEFT, padx=5)
+                self._deactivate_widget(self.audio_entry)
 
                 play_audio_frame = ttk.Frame(self)
                 play_audio_frame.pack(fill=tk.X, padx=10, pady=10)
                 self.play_audio_button = ttk.Button(play_audio_frame, text='Play Audio', command=self.play_audio)
                 self.play_audio_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
-                self.transcribe_button = ttk.Button(play_audio_frame, text='Transcribe', command=self.transcribe_audio)
+                self.transcribe_button = ttk.Button(play_audio_frame, text='Transcribe', command=self.transcribe)
                 self.transcribe_button.pack(side=tk.LEFT, expand=True, fill=tk.X)
                 self._deactivate_widget(self.play_audio_button)
                 self._deactivate_widget(self.transcribe_button)
@@ -88,8 +89,10 @@ class MainScreen(tk.Tk):
         if(audio_path):
             self.recorder.audio_path = audio_path
             audio_name = remove_path(audio_path)
+            self._activate_widget(self.audio_entry)
             self.audio_entry.delete(0, tk.END)
             self.audio_entry.insert(0, audio_name)
+            self._deactivate_widget(self.audio_entry)
             self._activate_widget(self.play_audio_button)
             self._activate_widget(self.transcribe_button)
 
@@ -109,6 +112,23 @@ class MainScreen(tk.Tk):
 
         else:
             messagebox.showerror('Error', 'Select source language.')
+        
+        self._activate_widget(self.start_record_button)
+        self._activate_widget(self.stop_record_button)
+        self._activate_widget(self.transcribe_button)
+        self._activate_widget(self.select_audio_button)
+        self._activate_widget(self.source_language_menu)
+        self.status_label.config(text='')
+
+    def transcribe(self):
+        self._deactivate_widget(self.start_record_button)
+        self._deactivate_widget(self.stop_record_button)
+        self._deactivate_widget(self.transcribe_button)
+        self._deactivate_widget(self.select_audio_button)
+        self._deactivate_widget(self.source_language_menu)
+        self.status_label.config(text='Transcribing...')
+        Thread(target=self.transcribe_audio, daemon=True).start()
+        
 
     def _deactivate_widget(self, widget):
         widget.config(state='disabled')
