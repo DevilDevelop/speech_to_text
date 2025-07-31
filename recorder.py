@@ -27,11 +27,12 @@ class Recorder:
             with InputStream(samplerate=self.sample_rate, channels=self.channels, callback=self._record_callback):
                 while self.is_recording:
                     file.write(self.queue.get())
+        self.audio_path = AUDIO_RECORDED_PATH
+
 
     def play_audio(self):
         playaudio(self.audio_path)
 
     def stop_record(self):
         self.is_recording = False
-        self.audio_path = AUDIO_RECORDED_PATH
     
