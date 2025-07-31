@@ -84,6 +84,7 @@ class MainScreen(tk.Tk):
         self._activate_widget(self.start_record_button)
         self._activate_widget(self.play_audio_button)
         self._activate_widget(self.transcribe_button)
+        self._activate_widget(self.select_audio_button)
         self._activate_widget(self.audio_entry)
         self.audio_entry.delete(0, tk.END)
         self._deactivate_widget(self.audio_entry)
