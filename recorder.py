@@ -22,12 +22,13 @@ class Recorder:
         self.queue.put(indata.copy())
     
     def record_audio(self):
+        self.audio_path = AUDIO_RECORDED_PATH
         self.is_recording = True
         with SoundFile(self.audio_path, mode='w', samplerate=self.sample_rate, channels=self.channels, subtype='PCM_16') as file:
             with InputStream(samplerate=self.sample_rate, channels=self.channels, callback=self._record_callback):
                 while self.is_recording:
                     file.write(self.queue.get())
-        self.audio_path = AUDIO_RECORDED_PATH
+        
 
 
     def play_audio(self):
@@ -35,4 +36,5 @@ class Recorder:
 
     def stop_record(self):
         self.is_recording = False
+        self.audio_path = AUDIO_RECORDED_PATH
     
