@@ -120,7 +120,6 @@ class MainScreen(tk.Tk):
             messagebox.showerror('Error', 'Select source language.')
         
         self._activate_widget(self.start_record_button)
-        self._activate_widget(self.stop_record_button)
         self._activate_widget(self.transcribe_button)
         self._activate_widget(self.select_audio_button)
         self._activate_widget(self.source_language_menu)
