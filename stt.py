@@ -1,8 +1,10 @@
 from whisper import load_audio, load_model, pad_or_trim
+from torch import cuda
 
 class STT:
     def __init__(self):
-        self.model = load_model('large', device='cpu')
+        device = 'cuda' if cuda.is_available() else 'cpu'
+        self.model = load_model('large', device=device)
 
     def transcribe_text(self, audio_path: str, source_language: str):
         audio = load_audio(audio_path)
