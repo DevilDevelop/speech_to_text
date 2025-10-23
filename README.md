@@ -1,3 +1,32 @@
-Para utilizar, basta ter python instalado.
-Se seu sistema operacional for windows, com o terminal aberto no contexto da pasta raiz do projeto, digite: "./install.ps1".
-Se seu sistema for linux é o mesmo processo do windows, mas digite o comando: "./install.sh"
+# 🗣️ Speech To Text
+
+Um simples programa de **conversão de fala para texto** utilizando Python.  
+Com ele, você pode transcrever áudios a partir de arquivos de som.
+
+---
+
+## 🚀 Pré-requisitos
+
+Antes de começar, certifique-se de ter instalado:
+
+- [Python 3.8+](https://www.python.org/downloads/)
+- Uma conexão com a internet
+
+---
+
+## ⚙️ Instalação
+
+O processo de instalação é simples.  
+Basta abrir o **terminal** na pasta raiz do projeto e executar o comando correspondente ao seu sistema operacional:
+
+### 🪟 **Windows**
+```powershell
+./install.ps1
+./execute.ps1
+```
+
+### **Linux**
+```bash
+./install.sh
+./execute.sh
+```
