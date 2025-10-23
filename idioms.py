@@ -9,6 +9,7 @@ IDIOMS = {
     'Italian': 'it',
     'Japanese': 'ja',
     'Korean': 'ko',
+    'Portuguese': 'pt',
     'Russian': 'ru',
     'Spanish': 'es'
 }
